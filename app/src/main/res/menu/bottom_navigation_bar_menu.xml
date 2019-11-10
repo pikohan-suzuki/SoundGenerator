@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/soundFragment"
+        android:icon="@android:drawable/ic_secure"
+        android:title="Sound"/>
+    <item
+        android:id="@+id/tunerFragment"
+        android:icon="@android:drawable/ic_secure"
+        android:title="Tuner"/>
+    <item
+        android:id="@+id/metronomeFragment"
+        android:icon="@android:drawable/ic_secure"
+        android:title="Metronome"/>
+</menu>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/soundFragment">
+
+    <fragment
+        android:id="@+id/soundFragment"
+        android:name="com.amebaownd.pikohan_nwiatori.soundgenerator.sound.SoundFragment"
+        android:label="SoundFragment" />
+    <fragment
+        android:id="@+id/metronomeFragment"
+        android:name="com.amebaownd.pikohan_nwiatori.soundgenerator.metronome.MetronomeFragment"
+        android:label="MetronomeFragment" />
+    <fragment
+        android:id="@+id/tunerFragment"
+        android:name="com.amebaownd.pikohan_nwiatori.soundgenerator.tuner.TunerFragment"
+        android:label="TunerFragment" />
+</navigation>
