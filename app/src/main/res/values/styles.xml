@@ -6,11 +6,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarStyle">
-            @style/AppBarStyle
-        </item>
-
+        <item name="actionBarStyle">@style/AppBarStyle</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:textViewStyle">@style/textViewStyle</item>
     </style>
+
+    <style name="textViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+
+
+
 
     <style name="AppBarStyle" parent="Widget.AppCompat.ActionBar">
         <item name="android:textColor">@android:color/black</item>
