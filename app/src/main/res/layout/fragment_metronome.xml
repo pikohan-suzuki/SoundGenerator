@@ -206,6 +206,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:clickable="@{!viewModel.isPlaying}"
                     android:background="#FB8C00"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
