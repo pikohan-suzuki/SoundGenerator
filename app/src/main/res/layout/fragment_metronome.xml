@@ -13,6 +13,7 @@
         android:layout_height="match_parent" >
 
         <View
+            android:id="@+id/metroneme_tempo_view"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="#FB8C00"
@@ -22,26 +23,27 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/metronome_onOff_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="Button"
+            android:onClick="@{() -> viewModel.onStartStopButtonClicked()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <SeekBar
-            android:id="@+id/seekBar"
+            android:id="@+id/metronome_tempo_seekBar"
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:max="250"
-            android:progress="60"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            android:progress="@={viewModel.tempoSeekBarProgress}"
+            app:layout_constraintBottom_toTopOf="@+id/metronome_onOff_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -51,43 +53,48 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/seekBar"
+            app:layout_constraintBottom_toTopOf="@+id/metronome_tempo_seekBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/metronome_tempo_button0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onClickRhythmOff()}"
                 android:text="off" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/metronome_tempo_button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onClickRhythm2()}"
                 android:text="2" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/metronome_tempo_button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onClickRhythm3()}"
                 android:text="3" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/metronome_tempo_button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onClickRhythm4()}"
                 android:text="4" />
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/metronome_tempo_button6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onClickRhythm6()}"
                 android:text="6" />
         </LinearLayout>
 
@@ -101,53 +108,109 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="#FB8C00"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+            <FrameLayout
+                android:id="@+id/metronome_rhythm_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="#FB8C00"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <View
+                    android:id="@+id/metronome_rhythm_view1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="#FB8C00"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </FrameLayout>
 
-            <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="#FB8C00"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+            <FrameLayout
+                android:id="@+id/metronome_rhythm_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="#FB8C00"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <View
+                    android:id="@+id/metronome_rhythm_view2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="#FB8C00"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </FrameLayout>
 
-            <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="#FB8C00"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+            <FrameLayout
+                android:id="@+id/metronome_rhythm_layout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                <View
+                    android:id="@+id/metronome_rhythm_view3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="#FB8C00"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/metronome_rhythm_layout4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <View
+                    android:id="@+id/metronome_rhythm_view4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="#FB8C00"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/metronome_rhythm_layout5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <View
+                    android:id="@+id/metronome_rhythm_view5"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="#FB8C00"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/metronome_rhythm_layout6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#FB8C00"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:visibility="visible">
+
+                <View
+                    android:id="@+id/metronome_rhythm_view6"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="#FB8C00"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </FrameLayout>
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
