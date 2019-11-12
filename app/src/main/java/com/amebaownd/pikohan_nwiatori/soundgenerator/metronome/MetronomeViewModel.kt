@@ -22,9 +22,7 @@ class MetronomeViewModel ():ViewModel(){
         const val MODE = AudioTrack.MODE_STREAM
     }
 
-    private var rhythm = 1
 
-    var tempoSeekBarProgress = MutableLiveData<Int>(60)
     private val mAudioTrack =
         AudioTrack(
             STREAM_TYPE,
@@ -34,45 +32,45 @@ class MetronomeViewModel ():ViewModel(){
             BUFFER_SIZE,
             MODE
         )
-
     private lateinit var rhythmGenerator: RhythmGenerator
+    private var rhythm = 1
+    var tempoSeekBarProgress = MutableLiveData<Int>(60)
+    var isPlaying = MutableLiveData<Boolean>(false)
+    private var stopFlg = false
 
     fun onStartStopButtonClicked(){
-        rhythmGenerator = RhythmGenerator(SAMPLE_RATE, BUFFER_SIZE).apply {
-            this.setRhythm(rhythm)
-            this.setTempo(tempoSeekBarProgress.value!!)
-        }
-        mAudioTrack.play()
-        viewModelScope.launch(Dispatchers.IO){
-            while(true){
-                val soundData = rhythmGenerator.getNextRhythm()
-                val shortArray = ShortArray(BUFFER_SIZE){i ->
-                    (soundData[i] * Short.MAX_VALUE).toShort()
+        if(isPlaying.value!!){
+            isPlaying.value=false
+        }else {
+            isPlaying.value=true
+            rhythmGenerator = RhythmGenerator(SAMPLE_RATE, BUFFER_SIZE).apply {
+                this.setRhythm(rhythm)
+                this.setTempo(tempoSeekBarProgress.value!!)
+            }
+            mAudioTrack.play()
+            viewModelScope.launch(Dispatchers.IO) {
+                while (isPlaying.value ?: false) {
+                    val soundData = rhythmGenerator.getNextRhythm()
+                    val shortArray = ShortArray(BUFFER_SIZE) { i ->
+                        (soundData[i] * Short.MAX_VALUE).toShort()
+                    }
+                    mAudioTrack.write(
+                        shortArray,
+                        0,
+                        SoundViewModel.BUFFER_SIZE
+                    )
                 }
-                mAudioTrack.write(
-                    shortArray,
-                    0,
-                    SoundViewModel.BUFFER_SIZE
-                )
+                mAudioTrack.stop()
             }
         }
     }
 
     fun onStart(){
-        mAudioTrack.play()
-        viewModelScope.launch(Dispatchers.IO){
-            while(true){
-                val soundData = rhythmGenerator.getNextRhythm()
-                val shortArray = ShortArray(BUFFER_SIZE){i ->
-                    (soundData[i] * Short.MAX_VALUE).toShort()
-                }
-                mAudioTrack.write(
-                    shortArray,
-                    0,
-                    SoundViewModel.BUFFER_SIZE
-                )
-            }
-        }
+
+    }
+
+    fun onDestroy(){
+        mAudioTrack.flush()
     }
 
     fun onClickRhythmOff(){
