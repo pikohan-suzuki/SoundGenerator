@@ -29,7 +29,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Button"
+            android:text='@{viewModel.isPlaying ? "STOP" : "START"}'
             android:onClick="@{() -> viewModel.onStartStopButtonClicked()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +43,7 @@
             android:layout_marginBottom="8dp"
             android:max="250"
             android:progress="@={viewModel.tempoSeekBarProgress}"
+            android:clickable="@{!viewModel.isPlaying}"
             app:layout_constraintBottom_toTopOf="@+id/metronome_onOff_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -63,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewModel.onClickRhythmOff()}"
+                android:clickable="@{!viewModel.isPlaying}"
                 android:text="off" />
 
             <Button
@@ -71,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewModel.onClickRhythm2()}"
+                android:clickable="@{!viewModel.isPlaying}"
                 android:text="2" />
 
             <Button
@@ -79,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewModel.onClickRhythm3()}"
+                android:clickable="@{!viewModel.isPlaying}"
                 android:text="3" />
 
             <Button
@@ -87,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewModel.onClickRhythm4()}"
+                android:clickable="@{!viewModel.isPlaying}"
                 android:text="4" />
 
             <Button
@@ -95,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewModel.onClickRhythm6()}"
+                android:clickable="@{!viewModel.isPlaying}"
                 android:text="6" />
         </LinearLayout>
 
@@ -120,7 +126,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="#FB8C00"
+                    android:background="@drawable/background_lamp_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -137,7 +143,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="#FB8C00"
+                    android:background="@drawable/background_lamp_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -154,7 +160,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="#FB8C00"
+                    android:background="@drawable/background_lamp_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -171,7 +177,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="#FB8C00"
+                    android:background="@drawable/background_lamp_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -188,7 +194,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="#FB8C00"
+                    android:background="@drawable/background_lamp_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -206,8 +212,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:clickable="@{!viewModel.isPlaying}"
-                    android:background="#FB8C00"
+                    android:background="@drawable/background_lamp_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
