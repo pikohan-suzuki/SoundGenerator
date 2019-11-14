@@ -7,4 +7,11 @@
     <color name="windowBackground">#1B1B1B</color>
 
     <color name="textColor">#FB8C00</color>
+
+    <color name="lamp_light">#FDD835</color>
+    <color name="lamp_dark">#AF5000</color>
+    <color name="colorMetronomeView">#FB8C00</color>
+
+    <color name="colorRhythmButtonBackground">#FBB400</color>
+    <color name="colorCheckedRhythmButtonBackground">#AA5D00</color>
 </resources>
