@@ -89,4 +89,9 @@ class TunerViewModel ():ViewModel(){
             mAudioRecord.stop()
         }
     }
+
+    fun onStop(){
+        mAudioRecord.stop()
+        mAudioRecord.release()
+    }
 }

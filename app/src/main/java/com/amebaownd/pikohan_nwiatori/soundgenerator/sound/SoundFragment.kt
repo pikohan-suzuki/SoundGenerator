@@ -29,4 +29,9 @@ class SoundFragment :Fragment(){
 
         viewModel.start()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.flashAudioTrack()
+    }
 }

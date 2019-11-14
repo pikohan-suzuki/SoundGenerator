@@ -70,5 +70,7 @@ class SoundViewModel() : ViewModel() {
     }
 
     fun flashAudioTrack(){
-        mAudioTrack.flush()    }
+        mAudioTrack.stop()
+        mAudioTrack.flush()
+    }
 }

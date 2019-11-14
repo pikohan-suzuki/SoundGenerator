@@ -33,4 +33,9 @@ class TunerFragment :Fragment(){
 
         viewModel.start()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onStop()
+    }
 }
