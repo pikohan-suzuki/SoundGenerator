@@ -13,10 +13,10 @@
         android:layout_height="match_parent" >
 
         <View
-            android:id="@+id/metroneme_tempo_view"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#FB8C00"
+            android:id="@+id/metronome_tempo_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/background_metronome_view"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,23 +28,29 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text='@{viewModel.isPlaying ? "STOP" : "START"}'
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/background_on_off_button"
+            android:fontFamily="@font/baloo_da"
             android:onClick="@{() -> viewModel.onStartStopButtonClicked()}"
+            android:text='@{viewModel.isPlaying ? "STOP" : "START"}'
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="ON" />
 
         <SeekBar
             android:id="@+id/metronome_tempo_seekBar"
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="@{!viewModel.isPlaying}"
             android:max="250"
             android:progress="@={viewModel.tempoSeekBarProgress}"
-            android:clickable="@{!viewModel.isPlaying}"
-            app:layout_constraintBottom_toTopOf="@+id/metronome_onOff_button"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -52,65 +58,125 @@
             android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/metronome_tempo_seekBar"
+            app:layout_constraintBottom_toTopOf="@+id/metronome_onOff_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/metronome_tempo_button0"
+                android:id="@+id/metronome_tempo_button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
-                android:onClick="@{() -> viewModel.onClickRhythmOff()}"
+                android:background="@{viewModel.rhythmButtonBackground[0]}"
                 android:clickable="@{!viewModel.isPlaying}"
-                android:text="off" />
+                android:drawablePadding="0dp"
+                android:fontFamily="@font/baloo_da"
+                android:includeFontPadding="false"
+                android:onClick="@{viewModel.onButtonClicked}"
+                android:text="off"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/metronome_tempo_button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
-                android:onClick="@{() -> viewModel.onClickRhythm2()}"
+                android:background="@{viewModel.rhythmButtonBackground[1]}"
                 android:clickable="@{!viewModel.isPlaying}"
-                android:text="2" />
+                android:drawablePadding="0dp"
+                android:fontFamily="@font/baloo_da"
+                android:includeFontPadding="false"
+                android:onClick="@{viewModel.onButtonClicked}"
+                android:text="2"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/metronome_tempo_button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
-                android:onClick="@{() -> viewModel.onClickRhythm3()}"
+                android:background="@{viewModel.rhythmButtonBackground[2]}"
                 android:clickable="@{!viewModel.isPlaying}"
-                android:text="3" />
+                android:drawablePadding="0dp"
+                android:fontFamily="@font/baloo_da"
+                android:includeFontPadding="false"
+                android:onClick="@{viewModel.onButtonClicked}"
+                android:text="3"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/metronome_tempo_button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
-                android:onClick="@{() -> viewModel.onClickRhythm4()}"
+                android:background="@{viewModel.rhythmButtonBackground[3]}"
                 android:clickable="@{!viewModel.isPlaying}"
-                android:text="4" />
+                android:drawablePadding="0dp"
+                android:fontFamily="@font/baloo_da"
+                android:includeFontPadding="false"
+                android:onClick="@{viewModel.onButtonClicked}"
+                android:text="4"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/metronome_tempo_button6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
-                android:onClick="@{() -> viewModel.onClickRhythm6()}"
+                android:background="@{viewModel.rhythmButtonBackground[4]}"
                 android:clickable="@{!viewModel.isPlaying}"
-                android:text="6" />
+                android:drawablePadding="0dp"
+                android:fontFamily="@font/baloo_da"
+                android:includeFontPadding="false"
+                android:onClick="@{viewModel.onButtonClicked}"
+                android:text="6"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="32dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintBottom_toTopOf="@+id/metronome_tempo_seekBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -118,7 +184,8 @@
                 android:id="@+id/metronome_rhythm_layout1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="@{viewModel.lampVisibilities[0]}">
 
                 <View
                     android:id="@+id/metronome_rhythm_view1"
@@ -126,7 +193,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="@drawable/background_lamp_light"
+                    android:background="@{viewModel.lampResIds[0]}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -135,7 +202,8 @@
                 android:id="@+id/metronome_rhythm_layout2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="@{viewModel.lampVisibilities[1]}">
 
                 <View
                     android:id="@+id/metronome_rhythm_view2"
@@ -143,7 +211,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="@drawable/background_lamp_dark"
+                    android:background="@{viewModel.lampResIds[1]}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -152,7 +220,8 @@
                 android:id="@+id/metronome_rhythm_layout3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="@{viewModel.lampVisibilities[2]}">
 
                 <View
                     android:id="@+id/metronome_rhythm_view3"
@@ -160,7 +229,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="@drawable/background_lamp_dark"
+                    android:background="@{viewModel.lampResIds[2]}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -169,7 +238,8 @@
                 android:id="@+id/metronome_rhythm_layout4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="@{viewModel.lampVisibilities[3]}">
 
                 <View
                     android:id="@+id/metronome_rhythm_view4"
@@ -177,7 +247,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="@drawable/background_lamp_dark"
+                    android:background="@{viewModel.lampResIds[3]}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -186,7 +256,8 @@
                 android:id="@+id/metronome_rhythm_layout5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="@{viewModel.lampVisibilities[4]}">
 
                 <View
                     android:id="@+id/metronome_rhythm_view5"
@@ -194,7 +265,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="@drawable/background_lamp_dark"
+                    android:background="@{viewModel.lampResIds[4]}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
@@ -204,20 +275,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="visible">
+                android:visibility="@{viewModel.lampVisibilities[5]}">
 
                 <View
                     android:id="@+id/metronome_rhythm_view6"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_lamp_dark"
+                    android:background="@{viewModel.lampResIds[5]}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </FrameLayout>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo_da"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text='@{"♩= " + viewModel.tempoSeekBarProgress}'
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/metronome_tempo_view"
+            app:layout_constraintVertical_bias="0.61"
+            tools:text="♩= 60" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
