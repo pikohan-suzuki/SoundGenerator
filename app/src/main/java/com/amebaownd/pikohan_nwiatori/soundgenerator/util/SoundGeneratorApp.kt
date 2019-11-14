@@ -9,7 +9,7 @@ class MyContext(application : Context){
     var applicationContext = application
     companion object{
         private lateinit var instance:MyContext
-        fun onCreateAppcalition(applicationContext: Context){
+        fun onCreateApplication(applicationContext: Context){
             instance = MyContext(applicationContext)
         }
         fun getContext(): Context {
