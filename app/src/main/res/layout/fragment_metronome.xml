@@ -20,7 +20,8 @@
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.32" />
 
         <Button
             android:id="@+id/metronome_onOff_button"
@@ -43,13 +44,20 @@
 
         <SeekBar
             android:id="@+id/metronome_tempo_seekBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:clickable="@{!viewModel.isPlaying}"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#1F1A13"
+            android:clickable="false"
+            android:longClickable="false"
             android:max="250"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:progress="@={viewModel.tempoSeekBarProgress}"
+            android:progressTint="@color/colorRhythmButtonBackground"
+            android:thumbTint="@color/colorMetronomeView"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -58,6 +66,8 @@
             android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/metronome_onOff_button"
@@ -174,9 +184,9 @@
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="48dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/metronome_tempo_seekBar"
+            app:layout_constraintBottom_toTopOf="@+id/metronome_minus_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -303,6 +313,43 @@
             app:layout_constraintTop_toBottomOf="@+id/metronome_tempo_view"
             app:layout_constraintVertical_bias="0.61"
             tools:text="♩= 60" />
+
+        <Button
+            android:id="@+id/metronome_minus_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_plus_minus_button"
+            android:fontFamily="@font/baloo_da"
+            android:gravity="center"
+            android:onClick="@{viewModel.onPlusMinusButtonClicked}"
+            android:text="-1"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/metronome_tempo_seekBar"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/metronome_plus_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_plus_minus_button"
+            android:fontFamily="@font/baloo_da"
+            android:gravity="center"
+            android:includeFontPadding="true"
+            android:onClick="@{viewModel.onPlusMinusButtonClicked}"
+            android:text="+1"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/metronome_tempo_seekBar"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
