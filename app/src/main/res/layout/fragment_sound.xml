@@ -16,8 +16,9 @@
             android:id="@+id/soundGenerator_hz_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="56sp"
+            android:fontFamily="@font/baloo_da"
             android:text='@{Integer.toString(viewModel.hzProgress).concat("Hz")}'
+            android:textSize="64sp"
             app:layout_constraintBottom_toTopOf="@+id/soundGenerator_hz_seekBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,11 +31,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/background_on_off_button"
+            android:fontFamily="@font/baloo_da"
             android:onClick="@{() -> viewModel.onOnOffButtonClicked()}"
             android:text='@{viewModel.isPlaying ? "OFF" : "ON"}'
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="start" />
 
         <SeekBar
             android:id="@+id/soundGenerator_hz_seekBar"
@@ -44,10 +53,49 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
             android:indeterminate="false"
-            android:max="20000"
-            android:progress= "@={viewModel.hzProgress}"
+            android:max="4003"
+            android:background="#1F1A13"
+            android:progressTint="@color/colorRhythmButtonBackground"
+            android:thumbTint="@color/colorMetronomeView"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:progress="859"
             app:layout_constraintBottom_toTopOf="@+id/soundGenerator_onOff_button"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/sound_plus_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_plus_minus_button"
+            android:fontFamily="@font/baloo_da"
+            android:gravity="center"
+            android:text="+5"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:onClick="@{viewModel.onPlusMinusButtonClicked}"
+            app:layout_constraintBottom_toTopOf="@+id/soundGenerator_hz_seekBar"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/sound_minus_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_plus_minus_button"
+            android:fontFamily="@font/baloo_da"
+            android:gravity="center"
+            android:text="-5"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:onClick="@{viewModel.onPlusMinusButtonClicked}"
+            app:layout_constraintBottom_toTopOf="@+id/soundGenerator_hz_seekBar"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
