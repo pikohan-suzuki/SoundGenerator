@@ -6,16 +6,15 @@ import android.media.AudioManager
 import android.media.AudioTrack
 import android.util.Log
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.amebaownd.pikohan_nwiatori.soundgenerator.MainActivity
 import com.amebaownd.pikohan_nwiatori.soundgenerator.R
 import com.amebaownd.pikohan_nwiatori.soundgenerator.sound.SoundViewModel
 import com.amebaownd.pikohan_nwiatori.soundgenerator.util.Event
 import com.amebaownd.pikohan_nwiatori.soundgenerator.util.MyContext
-import kotlinx.android.synthetic.main.fragment_metronome.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -102,6 +101,8 @@ class MetronomeViewModel() : ViewModel() {
         _rhythmButtonBackground6
     )
 
+    var startAnimateTime = MutableLiveData<Long>()
+
     fun onStartStopButtonClicked() {
         if (isPlaying.value!!) {
             isPlaying.value = false
@@ -109,6 +110,7 @@ class MetronomeViewModel() : ViewModel() {
         } else {
             isPlaying.value = true
             _onStartEvent.value = Event(true)
+            resetLamp()
             rhythmGenerator = RhythmGenerator(SAMPLE_RATE, BUFFER_SIZE).apply {
                 this.setRhythm(rhythm)
                 this.setTempo(tempoSeekBarProgress.value!!)
@@ -125,8 +127,8 @@ class MetronomeViewModel() : ViewModel() {
                             state = it.key
                             viewModelScope.launch() {
                                 val delayMs = (1000 * it.value / SAMPLE_RATE).toLong()
+                                startAnimateTime.postValue(System.currentTimeMillis()+delayMs)
                                 delay(delayMs)
-                                Log.d("ssss",System.currentTimeMillis().toString())
                                 changeLamp(it.key)
                             }
                         }
@@ -156,7 +158,14 @@ class MetronomeViewModel() : ViewModel() {
         lampResIds[num].postValue(lampLightDrawable)
     }
 
-    private fun setVisibility() {
+    private fun resetLamp(){
+        lampResIds.forEach {
+            it.value = lampDarkDrawable
+        }
+        changeLamp(0)
+    }
+
+            private fun setVisibility() {
         for (i in lampVisibilities.indices) {
             lampVisibilities[i].value =
                 if (i < rhythm)
@@ -166,7 +175,13 @@ class MetronomeViewModel() : ViewModel() {
         }
     }
 
+    fun onPause(){
+        isPlaying.value=false
+        mAudioTrack.stop()
+    }
+
     fun onDestroy() {
+        isPlaying.value=false
         mAudioTrack.stop()
         mAudioTrack.flush()
     }
@@ -191,6 +206,22 @@ class MetronomeViewModel() : ViewModel() {
             }
         }
         rhythmButtonBackground[if(rhythm==6)4 else rhythm-1].value = backgroundRhythmButtonCheckedDrawable
+        resetLamp()
         setVisibility()
     }
+
+    fun onPlusMinusButtonClicked(view:View){
+        when(view.id){
+            R.id.metronome_plus_button->{
+                if(tempoSeekBarProgress.value!! < 250 && !isPlaying.value!!)
+                    tempoSeekBarProgress.value =  tempoSeekBarProgress.value!! +1
+            }
+            R.id.metronome_minus_button->{
+                if(tempoSeekBarProgress.value!! > 20 && !isPlaying.value!!)
+                    tempoSeekBarProgress.value =  tempoSeekBarProgress.value!! -1
+            }
+        }
+    }
+
+
 }
