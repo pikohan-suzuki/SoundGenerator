@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/soundFragment"
-        android:icon="@android:drawable/ic_secure"
+        android:icon="@drawable/ic_speaker"
         android:title="Sound"/>
     <item
         android:id="@+id/tunerFragment"
-        android:icon="@android:drawable/ic_secure"
+        android:icon="@drawable/ic_meter"
         android:title="Tuner"/>
     <item
         android:id="@+id/metronomeFragment"
-        android:icon="@android:drawable/ic_secure"
+       android:icon="@drawable/ic_metronome"
         android:title="Metronome"/>
 </menu>
