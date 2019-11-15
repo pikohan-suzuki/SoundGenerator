@@ -4,10 +4,12 @@ import android.media.AudioFormat
 import android.media.AudioManager
 import android.media.AudioTrack
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amebaownd.pikohan_nwiatori.soundgenerator.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,7 +22,6 @@ class SoundViewModel() : ViewModel() {
         const val AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT
         val BUFFER_SIZE =
             AudioTrack.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT)
-//            2048
         const val MODE = AudioTrack.MODE_STREAM
     }
 
@@ -33,43 +34,66 @@ class SoundViewModel() : ViewModel() {
     var hzProgress = MutableLiveData<Int>(440)
 
 
-
     fun onOnOffButtonClicked() {
         isPlaying.value = !(isPlaying.value ?: true)
     }
 
     fun start() {
         viewModelScope.launch(Dispatchers.IO) {
-            isRunning=true
-            var soundShortArray = ShortArray(BUFFER_SIZE){i: Int -> 0.toShort() }
-            while(isRunning) {
+            isRunning = true
+            var soundShortArray = ShortArray(BUFFER_SIZE) { i: Int -> 0.toShort() }
+            while (isRunning) {
                 mAudioTrack.play()
 
-                if(isPlaying.value ?: false) {
+                if (isPlaying.value ?: false) {
 //                    viewModelScope.launch {
-                        val soundData = mSoundGenerator.getNext(hzProgress.value ?: 0)
+                    val soundData = mSoundGenerator.getNext(hzProgress.value ?: 0)
 //                        val soundShortList = mutableListOf<Short>()
-                        for (i in soundData.indices) {
+                    for (i in soundData.indices) {
 //                            soundShortList.add((dlValue * Short.MAX_VALUE).toShort())
-                            soundShortArray[i] = (soundData[i] * Short.MAX_VALUE).toShort()
-                        }
+                        soundShortArray[i] = (soundData[i] * Short.MAX_VALUE).toShort()
+                    }
 //                    }
 //                        soundShortArray = soundShortList.toTypedArray().toShortArray()
-                }else{
-                    soundShortArray = ShortArray(BUFFER_SIZE){i: Int -> 0.toShort() }
+                } else {
+                    soundShortArray = ShortArray(BUFFER_SIZE) { i: Int -> 0.toShort() }
                 }
                 mAudioTrack.write(
                     soundShortArray,
                     0,
                     BUFFER_SIZE
                 )
-                Log.d("Sound","$BUFFER_SIZE")
             }
             mAudioTrack.stop()
         }
     }
 
-    fun flashAudioTrack(){
+    fun onPlusMinusButtonClicked(view: View) {
+        when (view.id) {
+            R.id.sound_minus_button -> {
+                hzProgress.value =
+                    if (hzProgress.value!! <= 5)
+                        0
+                    else
+                        hzProgress.value!! - 5
+            }
+            R.id.sound_plus_button -> {
+                hzProgress.value =
+                    if (hzProgress.value!! >= 19995)
+                        20000
+                    else
+                        hzProgress.value!! + 5
+            }
+        }
+    }
+
+    fun stopAudioTrack(){
+        isRunning=false
+        isPlaying.value=false
+        mAudioTrack.stop()
+    }
+    fun flashAudioTrack() {
+        isRunning=false
         mAudioTrack.stop()
         mAudioTrack.flush()
     }
