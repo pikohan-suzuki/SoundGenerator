@@ -31,7 +31,7 @@ class MetronomeFragment : Fragment() {
     private lateinit var animateL2R: ObjectAnimator
     private lateinit var animateR2L: ObjectAnimator
 
-    private var startAnimationTimeStump = -1L
+//    private var startAnimationTimeStump = -1L
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +49,7 @@ class MetronomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupSeekBar()
-        onStartTimeChanged()
+//        onStartTimeChanged()
     }
 
     override fun onStart() {
@@ -68,16 +68,16 @@ class MetronomeFragment : Fragment() {
         }
     }
 
-    private fun onStartTimeChanged() {
-        viewModel.startAnimateTime.observe(this, Observer {
-            if(it!=-1L) {
-                startAnimationTimeStump = it
-                Log.d("startTime", it.toString())
-            }else{
-                startAnimationTimeStump = System.currentTimeMillis()
-            }
-        })
-    }
+//    private fun onStartTimeChanged() {
+//        viewModel.startAnimateTime.observe(this, Observer {
+//            if(it!=-1L) {
+//                startAnimationTimeStump = it
+//                Log.d("startTime", it.toString())
+//            }else{
+//                startAnimationTimeStump = System.currentTimeMillis()
+//            }
+//        })
+//    }
 
     private fun onStartMetronome() {
         viewModel.onStartEvent.observe(this, EventObserver {
@@ -122,10 +122,12 @@ class MetronomeFragment : Fragment() {
 
         scope.launch {
             while (isPlaying) {
-                var playTime = duration + startAnimationTimeStump - System.currentTimeMillis()
+                var playTime = duration + viewModel.startAnimateTime - System.currentTimeMillis()
                 if(playTime < 0 ) playTime =duration
                 animateL2R.duration = playTime
                 Log.d("playTime",playTime.toString())
+                Log.d("real",viewModel.startAnimateTime.toString())
+                Log.d("target",System.currentTimeMillis().toString())
                 animateL2R.start()
                 scope.async(Dispatchers.IO)  {
                     while(animateL2R.isRunning && isPlaying){
@@ -134,10 +136,10 @@ class MetronomeFragment : Fragment() {
 
                 if(!isPlaying)
                     animateL2R.cancel()
-                playTime = duration + startAnimationTimeStump - System.currentTimeMillis()
+                playTime = duration + viewModel.startAnimateTime - System.currentTimeMillis()
                 if(playTime < 0 ) playTime =duration
                 animateR2L.duration = playTime
-                Log.d("playTime",playTime.toString())
+//                Log.d("playTime",playTime.toString())
                 animateR2L.start()
                 scope.async(Dispatchers.IO)  {
                     while(animateR2L.isRunning && isPlaying){

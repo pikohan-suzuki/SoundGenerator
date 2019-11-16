@@ -48,7 +48,7 @@ class MetronomeViewModel() : ViewModel() {
     var tempoSeekBarProgress = MutableLiveData<Int>(60)
     var isPlaying = MutableLiveData<Boolean>(false)
 
-    private var state = 1
+    private var state = 0
 
     private var _onStartEvent = MutableLiveData<Event<Boolean>>(Event(false))
     val onStartEvent :LiveData<Event<Boolean>> = _onStartEvent
@@ -101,7 +101,7 @@ class MetronomeViewModel() : ViewModel() {
         _rhythmButtonBackground6
     )
 
-    var startAnimateTime = MutableLiveData<Long>()
+    var startAnimateTime = System.currentTimeMillis()
 
     fun onStartStopButtonClicked() {
         if (isPlaying.value!!) {
@@ -109,6 +109,7 @@ class MetronomeViewModel() : ViewModel() {
             _onStartEvent.value = Event(false)
         } else {
             isPlaying.value = true
+            startAnimateTime = System.currentTimeMillis()
             _onStartEvent.value = Event(true)
             resetLamp()
             rhythmGenerator = RhythmGenerator(SAMPLE_RATE, BUFFER_SIZE).apply {
@@ -127,8 +128,9 @@ class MetronomeViewModel() : ViewModel() {
                             state = it.key
                             viewModelScope.launch() {
                                 val delayMs = (1000 * it.value / SAMPLE_RATE).toLong()
-                                startAnimateTime.postValue(System.currentTimeMillis()+delayMs)
+                                startAnimateTime=System.currentTimeMillis()+delayMs
                                 delay(delayMs)
+
                                 changeLamp(it.key)
                             }
                         }
