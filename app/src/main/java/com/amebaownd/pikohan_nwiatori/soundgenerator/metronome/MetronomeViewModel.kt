@@ -4,9 +4,7 @@ import android.graphics.drawable.Drawable
 import android.media.AudioFormat
 import android.media.AudioManager
 import android.media.AudioTrack
-import android.util.Log
 import android.view.View
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MetronomeViewModel() : ViewModel() {
+class MetronomeViewModel : ViewModel() {
 
     companion object {
         const val STREAM_TYPE = AudioManager.STREAM_MUSIC
@@ -35,38 +33,25 @@ class MetronomeViewModel() : ViewModel() {
     private val lampDarkDrawable = MyContext.getDrawable(R.drawable.background_lamp_dark)
 
     private val mAudioTrack =
-        AudioTrack(
-            STREAM_TYPE,
-            SAMPLE_RATE,
-            CHANNEL_CONFIG,
-            AUDIO_FORMAT,
-            BUFFER_SIZE,
-            MODE
-        )
+        AudioTrack(STREAM_TYPE, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, BUFFER_SIZE, MODE)
+
     private lateinit var rhythmGenerator: RhythmGenerator
     var rhythm = 1
     var tempoSeekBarProgress = MutableLiveData<Int>(60)
     var isPlaying = MutableLiveData<Boolean>(false)
-
     private var state = 0
+    var startAnimateTime = System.currentTimeMillis()
+
 
     private var _onStartEvent = MutableLiveData<Event<Boolean>>(Event(false))
     val onStartEvent :LiveData<Event<Boolean>> = _onStartEvent
 
-    private var _lampResId1 =
-        MutableLiveData<Drawable>(lampDarkDrawable)
-    private var _lampResId2 =
-        MutableLiveData<Drawable>(lampDarkDrawable)
-    private var _lampResId3 =
-        MutableLiveData<Drawable>(lampDarkDrawable)
-    private var _lampResId4 =
-        MutableLiveData<Drawable>(lampDarkDrawable)
-
-    private var _lampResId5 =
-        MutableLiveData<Drawable>(lampDarkDrawable)
-    private var _lampResId6 =
-        MutableLiveData<Drawable>(lampDarkDrawable)
-
+    private var _lampResId1 = MutableLiveData<Drawable>(lampDarkDrawable)
+    private var _lampResId2 = MutableLiveData<Drawable>(lampDarkDrawable)
+    private var _lampResId3 = MutableLiveData<Drawable>(lampDarkDrawable)
+    private var _lampResId4 = MutableLiveData<Drawable>(lampDarkDrawable)
+    private var _lampResId5 = MutableLiveData<Drawable>(lampDarkDrawable)
+    private var _lampResId6 = MutableLiveData<Drawable>(lampDarkDrawable)
     val lampResIds: List<MutableLiveData<Drawable>> =
         listOf(_lampResId1, _lampResId2, _lampResId3, _lampResId4, _lampResId5, _lampResId6)
 
@@ -77,14 +62,7 @@ class MetronomeViewModel() : ViewModel() {
     private var _lampVisibility5 = MutableLiveData<Int>(View.GONE)
     private var _lampVisibility6 = MutableLiveData<Int>(View.GONE)
     val lampVisibilities: List<MutableLiveData<Int>> =
-        listOf(
-            _lampVisibility1,
-            _lampVisibility2,
-            _lampVisibility3,
-            _lampVisibility4,
-            _lampVisibility5,
-            _lampVisibility6
-        )
+        listOf(_lampVisibility1, _lampVisibility2, _lampVisibility3, _lampVisibility4, _lampVisibility5, _lampVisibility6)
 
     private var backgroundRhythmButtonDrawable = MyContext.getDrawable(R.drawable.background_rhythm_button)
     private var backgroundRhythmButtonCheckedDrawable = MyContext.getDrawable(R.drawable.background_rhythm_button_checked)
@@ -93,15 +71,10 @@ class MetronomeViewModel() : ViewModel() {
     private var _rhythmButtonBackground3 = MutableLiveData<Drawable>(backgroundRhythmButtonDrawable)
     private var _rhythmButtonBackground4 = MutableLiveData<Drawable>(backgroundRhythmButtonDrawable)
     private var _rhythmButtonBackground6 = MutableLiveData<Drawable>(backgroundRhythmButtonDrawable)
-    val rhythmButtonBackground = listOf(
-        _rhythmButtonBackground1,
-        _rhythmButtonBackground2,
-        _rhythmButtonBackground3,
-        _rhythmButtonBackground4,
-        _rhythmButtonBackground6
-    )
+    val rhythmButtonBackground =
+        listOf(_rhythmButtonBackground1,_rhythmButtonBackground2,_rhythmButtonBackground3,_rhythmButtonBackground4,_rhythmButtonBackground6)
 
-    var startAnimateTime = System.currentTimeMillis()
+
 
     fun onStartStopButtonClicked() {
         if (isPlaying.value!!) {
@@ -150,7 +123,6 @@ class MetronomeViewModel() : ViewModel() {
     }
 
     private fun changeLamp(num: Int) {
-//        Log.d("lampId",num.toString())
         val beforeId =
             if (num == 0)
                 rhythm - 1
@@ -224,6 +196,4 @@ class MetronomeViewModel() : ViewModel() {
             }
         }
     }
-
-
 }

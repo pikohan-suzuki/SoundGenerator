@@ -5,11 +5,9 @@ import android.animation.PropertyValuesHolder
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,7 +16,6 @@ import com.amebaownd.pikohan_nwiatori.soundgenerator.util.EventObserver
 import com.amebaownd.pikohan_nwiatori.soundgenerator.util.getViewModelFactory
 import kotlinx.android.synthetic.main.fragment_metronome.*
 import kotlinx.coroutines.*
-import java.time.format.SignStyle
 
 class MetronomeFragment : Fragment() {
 
@@ -31,15 +28,12 @@ class MetronomeFragment : Fragment() {
     private lateinit var animateL2R: ObjectAnimator
     private lateinit var animateR2L: ObjectAnimator
 
-//    private var startAnimationTimeStump = -1L
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentMetronomeBinding =
-            FragmentMetronomeBinding.inflate(inflater, container, false).apply {
+        fragmentMetronomeBinding = FragmentMetronomeBinding.inflate(inflater, container, false).apply {
                 viewModel = this@MetronomeFragment.viewModel
                 lifecycleOwner = viewLifecycleOwner
             }
@@ -49,7 +43,6 @@ class MetronomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupSeekBar()
-//        onStartTimeChanged()
     }
 
     override fun onStart() {
@@ -67,17 +60,6 @@ class MetronomeFragment : Fragment() {
             })
         }
     }
-
-//    private fun onStartTimeChanged() {
-//        viewModel.startAnimateTime.observe(this, Observer {
-//            if(it!=-1L) {
-//                startAnimationTimeStump = it
-//                Log.d("startTime", it.toString())
-//            }else{
-//                startAnimationTimeStump = System.currentTimeMillis()
-//            }
-//        })
-//    }
 
     private fun onStartMetronome() {
         viewModel.onStartEvent.observe(this, EventObserver {
@@ -105,7 +87,6 @@ class MetronomeFragment : Fragment() {
         this.activity?.windowManager?.defaultDisplay?.getSize(windowSize)
         val pivotY = PropertyValuesHolder.ofFloat("pivotY", windowSize.y / 4f)
         val angle = (Math.atan(((windowSize.x / 2f) / (windowSize.y / 4f)).toDouble()) * 180f / Math.PI).toFloat()
-        val rotateC2R = PropertyValuesHolder.ofFloat("rotation", 0f, angle)
         val rotateL2R = PropertyValuesHolder.ofFloat("rotation", -angle, angle)
         val rotateR2L = PropertyValuesHolder.ofFloat("rotation", angle, -angle)
         val duration = 60000 / (viewModel.tempoSeekBarProgress.value ?: 60).toLong()
@@ -125,9 +106,6 @@ class MetronomeFragment : Fragment() {
                 var playTime = duration + viewModel.startAnimateTime - System.currentTimeMillis()
                 if(playTime < 0 ) playTime =duration
                 animateL2R.duration = playTime
-                Log.d("playTime",playTime.toString())
-                Log.d("real",viewModel.startAnimateTime.toString())
-                Log.d("target",System.currentTimeMillis().toString())
                 animateL2R.start()
                 scope.async(Dispatchers.IO)  {
                     while(animateL2R.isRunning && isPlaying){
@@ -139,7 +117,6 @@ class MetronomeFragment : Fragment() {
                 playTime = duration + viewModel.startAnimateTime - System.currentTimeMillis()
                 if(playTime < 0 ) playTime =duration
                 animateR2L.duration = playTime
-//                Log.d("playTime",playTime.toString())
                 animateR2L.start()
                 scope.async(Dispatchers.IO)  {
                     while(animateR2L.isRunning && isPlaying){
@@ -163,6 +140,4 @@ class MetronomeFragment : Fragment() {
         isPlaying=false
         viewModel.onDestroy()
     }
-
-
 }

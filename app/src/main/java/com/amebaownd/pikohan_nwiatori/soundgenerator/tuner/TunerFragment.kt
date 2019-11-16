@@ -14,8 +14,6 @@ import com.amebaownd.pikohan_nwiatori.soundgenerator.databinding.FragmentTunerBi
 import com.amebaownd.pikohan_nwiatori.soundgenerator.util.getViewModelFactory
 import android.view.Gravity
 
-
-
 class TunerFragment : Fragment() {
 
     private val viewModel: TunerViewModel by viewModels { getViewModelFactory() }
@@ -37,9 +35,6 @@ class TunerFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-
     }
 
     override fun onStart() {

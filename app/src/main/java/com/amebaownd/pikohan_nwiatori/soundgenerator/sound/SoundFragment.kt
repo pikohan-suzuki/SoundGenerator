@@ -15,9 +15,7 @@ import java.lang.Math.round
 class SoundFragment : Fragment() {
 
     private val viewModel: SoundViewModel by viewModels { getViewModelFactory() }
-
     private lateinit var fragmentSoundBinding: FragmentSoundBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +49,6 @@ class SoundFragment : Fragment() {
                         20000
                     else
                         hz
-//                    =51.62*EXP(0.00109*B2)-51.62
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {

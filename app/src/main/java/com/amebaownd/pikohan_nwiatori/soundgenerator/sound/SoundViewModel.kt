@@ -3,9 +3,7 @@ package com.amebaownd.pikohan_nwiatori.soundgenerator.sound
 import android.media.AudioFormat
 import android.media.AudioManager
 import android.media.AudioTrack
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +11,7 @@ import com.amebaownd.pikohan_nwiatori.soundgenerator.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SoundViewModel() : ViewModel() {
+class SoundViewModel : ViewModel() {
 
     companion object {
         const val STREAM_TYPE = AudioManager.STREAM_MUSIC
@@ -44,17 +42,11 @@ class SoundViewModel() : ViewModel() {
             var soundShortArray = ShortArray(BUFFER_SIZE) { i: Int -> 0.toShort() }
             while (isRunning) {
                 mAudioTrack.play()
-
                 if (isPlaying.value ?: false) {
-//                    viewModelScope.launch {
                     val soundData = mSoundGenerator.getNext(hzProgress.value ?: 0)
-//                        val soundShortList = mutableListOf<Short>()
                     for (i in soundData.indices) {
-//                            soundShortList.add((dlValue * Short.MAX_VALUE).toShort())
                         soundShortArray[i] = (soundData[i] * Short.MAX_VALUE).toShort()
                     }
-//                    }
-//                        soundShortArray = soundShortList.toTypedArray().toShortArray()
                 } else {
                     soundShortArray = ShortArray(BUFFER_SIZE) { i: Int -> 0.toShort() }
                 }

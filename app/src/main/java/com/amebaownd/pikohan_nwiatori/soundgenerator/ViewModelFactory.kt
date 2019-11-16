@@ -8,7 +8,6 @@ import com.amebaownd.pikohan_nwiatori.soundgenerator.tuner.TunerViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory (
-    //private val ideaMemoRepository: IdeaMemoRepository
 ): ViewModelProvider.NewInstanceFactory(){
 
     override fun <T: ViewModel> create(modelClass:Class<T>): T {

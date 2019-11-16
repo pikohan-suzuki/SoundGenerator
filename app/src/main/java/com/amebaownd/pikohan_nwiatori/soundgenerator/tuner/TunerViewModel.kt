@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.max
 
-class TunerViewModel ():ViewModel(){
+class TunerViewModel:ViewModel(){
 
     companion object {
         const val FFT_SIZE = 4096
@@ -20,16 +20,8 @@ class TunerViewModel ():ViewModel(){
         const val ONE_FRAME_DATA_COUNT = SAMPLING_RATE / FRAME_RATE
         const val ONE_FRAME_SIZE_IN_BYTE = ONE_FRAME_DATA_COUNT * 2
         val audioBufferSizeInByte =
-            max(
-                ONE_FRAME_SIZE_IN_BYTE * 10,
-                AudioRecord.getMinBufferSize(
-                    SAMPLING_RATE,
-                    AudioFormat.CHANNEL_IN_MONO,
-                    AudioFormat.ENCODING_PCM_16BIT))
-        val bufSize = AudioRecord.getMinBufferSize(
-            SAMPLING_RATE,
-            AudioFormat.CHANNEL_IN_MONO,
-            AudioFormat.ENCODING_PCM_16BIT)
+            max(ONE_FRAME_SIZE_IN_BYTE * 10, AudioRecord.getMinBufferSize(SAMPLING_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT))
+        val bufSize = AudioRecord.getMinBufferSize(SAMPLING_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
     }
 
     private var dB_baseline = Math.pow(2.0, 15.0) * FFT_SIZE * Math.sqrt(2.0)
@@ -37,7 +29,6 @@ class TunerViewModel ():ViewModel(){
     private var fft = FFT4g(FFT_SIZE)
     private var isRecording: Boolean = false
     var resol = SAMPLING_RATE / FFT_SIZE.toDouble()
-
     var hzText = MutableLiveData<String>()
 
     init {
